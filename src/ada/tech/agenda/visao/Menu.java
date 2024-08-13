@@ -1,5 +1,6 @@
 package ada.tech.agenda.visao;
 
+import ada.tech.agenda.modelo.Contato;
 import ada.tech.agenda.utilitario.Util;
 
 import java.util.Scanner;
@@ -14,13 +15,13 @@ public class Menu {
 
     public void iniciar() {
 
-            int opcao = 0;
+        int opcao = 0;
 
-            do {
+        do {
 
-                String lista="";
+            String lista = "";
 
-                String opcoes = STR."""
+            String opcoes = STR."""
 
                     ##################
                     ##### AGENDA #####
@@ -38,28 +39,50 @@ public class Menu {
 
                     """;
 
-                Util.escrever(opcoes);
-                opcao =  Integer.parseInt(Util.ler(entrada, "Digite a opcao:"));
+            Util.escrever(opcoes);
+            opcao = Integer.parseInt(Util.ler(entrada, "Digite a opcao:"));
 
-                switch (opcao){
-                    case 1:
-                        break;
+            switch (opcao) {
+                case 1:
+                    adicionarContato();
+                    break;
 
-                    case 2:
-                        break;
+                case 2:
 
-                    case 3:
-                        break;
+                    break;
 
-                    case 4:
-                        break;
+                case 3:
 
-                    default:
-                        Util.erro("Opcao invalida");
-                        break;
-                }
+                    break;
 
-            } while(opcao <= 4);
+                case 4:
+
+                    break;
+
+                default:
+                    Util.erro("Opcao invalida");
+                    break;
+            }
+
+        } while (opcao <= 4);
+
+    }
+
+    public void adicionarContato() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Informe o seu primeiro nome: ");
+        String nome = sc.nextLine();
+
+        System.out.println("Informe o seu sobrenome: ");
+        String sobrenome = sc.nextLine();
+
+        System.out.println("Informe o seu telefone: ");
+        String telefone = sc.nextLine();
+
+        System.out.println("Informe o meu Email: ");
+        String email = sc.nextLine();
+
+        Contato novoContato = new Contato(nome,sobrenome,telefone,email);
 
     }
 
