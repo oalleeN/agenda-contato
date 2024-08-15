@@ -1,5 +1,6 @@
 package ada.tech.agenda.visao;
 
+import ada.tech.agenda.modelo.Agenda;
 import ada.tech.agenda.modelo.Contato;
 import ada.tech.agenda.utilitario.Util;
 
@@ -8,9 +9,11 @@ import java.util.Scanner;
 public class Menu {
 
     private final Scanner entrada;
+    private Agenda agenda; // variavel local agenda dentro classe Menu
 
     public Menu() {
         this.entrada = new Scanner(System.in);
+        agenda= new Agenda(); // instancia da agenda
     }
 
     public void iniciar() {
@@ -19,7 +22,7 @@ public class Menu {
 
         do {
 
-            String lista = "";
+
 
             String opcoes = STR."""
 
@@ -28,7 +31,7 @@ public class Menu {
                     ##################
 
                     >>>> Contatos <<<<
-                    \{lista}
+                    \{agenda.toString()}
 
                     >>>> Menu <<<<
                     1 - Adicionar Contato
@@ -83,6 +86,7 @@ public class Menu {
         String email = sc.nextLine();
 
         Contato novoContato = new Contato(nome,sobrenome,telefone,email);
+        agenda.adicionarContato(novoContato); // add conttao na agenda
 
     }
 
