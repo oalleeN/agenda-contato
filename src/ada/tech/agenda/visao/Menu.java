@@ -1,5 +1,6 @@
 package ada.tech.agenda.visao;
 
+import ada.tech.agenda.modelo.Contato;
 import ada.tech.agenda.utilitario.Util;
 
 import java.util.Scanner;
@@ -14,52 +15,74 @@ public class Menu {
 
     public void iniciar() {
 
-            int opcao = 0;
+        int opcao = 0;
 
-            do {
+        do {
 
-                String lista="";
+            String lista = "";
 
-                String opcoes = STR."""
+            String opcoes = String.format("""
+                    
+                            ##################
+                            ##### AGENDA #####
+                            ##################
+                            
+                            >>>> Contatos <<<<
+                            %s
+                            
+                            >>>> Menu <<<<
+                            1 - Adicionar Contato
+                            2 - Detalhar Contato
+                            3 - Editar Contato
+                            4 - Remover Contato
+                            5 - Sair
+                            
+                            """, lista);
 
-                    ##################
-                    ##### AGENDA #####
-                    ##################
+            Util.escrever(opcoes);
+            opcao = Integer.parseInt(Util.ler(entrada, "Digite a opcao:"));
 
-                    >>>> Contatos <<<<
-                    \{lista}
+            switch (opcao) {
+                case 1:
+                    adicionarContato();
+                    break;
 
-                    >>>> Menu <<<<
-                    1 - Adicionar Contato
-                    2 - Detalhar Contato
-                    3 - Editar Contato
-                    4 - Remover Contato
-                    5 - Sair
+                case 2:
 
-                    """;
+                    break;
 
-                Util.escrever(opcoes);
-                opcao =  Integer.parseInt(Util.ler(entrada, "Digite a opcao:"));
+                case 3:
 
-                switch (opcao){
-                    case 1:
-                        break;
+                    break;
 
-                    case 2:
-                        break;
+                case 4:
 
-                    case 3:
-                        break;
+                    break;
 
-                    case 4:
-                        break;
+                default:
+                    Util.erro("Opcao invalida");
+                    break;
+            }
 
-                    default:
-                        Util.erro("Opcao invalida");
-                        break;
-                }
+        } while (opcao <= 4);
 
-            } while(opcao <= 4);
+    }
+
+    public void adicionarContato() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Informe o seu primeiro nome: ");
+        String nome = sc.nextLine();
+
+        System.out.println("Informe o seu sobrenome: ");
+        String sobrenome = sc.nextLine();
+
+        System.out.println("Informe o seu telefone: ");
+        String telefone = sc.nextLine();
+
+        System.out.println("Informe o meu Email: ");
+        String email = sc.nextLine();
+
+        Contato novoContato = new Contato(nome,sobrenome,telefone,email);
 
     }
 
