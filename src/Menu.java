@@ -77,7 +77,7 @@ public class Menu {
         String email = sc.nextLine();
 
         Contato novoContato = new Contato(nome,sobrenome,telefone,email);
-        agenda.adicionarContato(novoContato); // add conttao na agenda
+        agenda.adicionarContato(novoContato); // add contato na agenda
     }
     
 }
