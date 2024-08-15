@@ -1,7 +1,8 @@
 import java.util.Arrays;
 
 public class Agenda {
-    Contato[] listaContatos;        // declaracao array listaContatos
+
+    Contato[] listaContatos; // declaracao array listaContatos
 
     public Agenda(){     // construtor
         listaContatos=new Contato[0]; // inicializando a listaContatos vazia
