@@ -85,5 +85,5 @@ public class Menu {
         Contato novoContato = new Contato(nome,sobrenome,telefone,email);
         agenda.adicionarContato(novoContato); // add conttao na agenda
 
-    
+    }
 }
