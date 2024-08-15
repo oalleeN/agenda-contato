@@ -1,9 +1,3 @@
-package ada.tech.agenda.visao;
-
-import ada.tech.agenda.modelo.Agenda;
-import ada.tech.agenda.modelo.Contato;
-import ada.tech.agenda.utilitario.Util;
-
 import java.util.Scanner;
 
 public class Menu {
@@ -84,6 +78,6 @@ public class Menu {
 
         Contato novoContato = new Contato(nome,sobrenome,telefone,email);
         agenda.adicionarContato(novoContato); // add conttao na agenda
-
+    }
     
 }

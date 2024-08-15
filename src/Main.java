@@ -1,34 +1,45 @@
-import ada.tech.agenda.visao.Menu;
-import ada.tech.agenda.modelo.Contato;
-
 public class Main {
 
     public static void main(String[] args) {
-        Menu menu = new Menu();
-        menu.iniciar();
 
-        int contador = 1;
-        Contato[] contato = new Contato[contador];
-        contato[0] = new Contato("Rafael", "Silva", "11997456560", "teste@dawda.com");
+        Agenda agenda = new Agenda();
 
-        System.out.println(contato[0]);
+        // Quando for colocar Scanner é basicamente isso //
+        // String nome = "";
+        // String sobreNome = "";
+        // String telefone = "";
+        // String email = "";
+        // Contato novoContato = new Contato(nome, sobreNome, telefone, email);
+        // agenda.adicionarContato(novoContato);
 
-        int novoTamanho = contador + 1;
-        Contato[] contatoBackup = new Contato[novoTamanho];
+        //Quando for fazer o Scanner não precisa colocar Nome1,Nome2,Nome3
+        //Utilize apenas nome,sobrenome,telefone,email que ele vai sobrescrever
 
-        for (int i = 0; i < contato.length; i++) {
-            contatoBackup[i] = new Contato(
-                    contato[i].getNome(),
-                    contato[i].getSobreNome(),
-                    contato[i].getTelefone(),
-                    contato[i].getEmail()
-            );
-        }
+        //Simulando Scanner //
+        String nome1 = "Lucas";
+        String sobreNome1 = "Campos";
+        String telefone1 = "11997756525";
+        String email1 = "teste01@ada.com.br";
+        Contato novoContato1 = new Contato(nome1, sobreNome1, telefone1, email1);
+        agenda.adicionarContato(novoContato1);
 
-        contato = contatoBackup; // Aqui ele vai sobrescrever o contato com o armazenamento do contatoBackup e tamanhanho
-        // do array dele nesse caso agora contato tem array tamanho 2 porque lá em cima deixei o contatoBackup com 2;
+        String nome2 = "Pedro";
+        String sobreNome2 = "Jose";
+        String telefone2 = "11997755525";
+        String email2 = "teste02@ada.com.br";
+        Contato novoContato2 = new Contato(nome2, sobreNome2, telefone2, email2);
+        agenda.adicionarContato(novoContato2);
 
-        contato[1] = new Contato("Luiz", "Silva", "11997456660", "teste@dawda.com");
+        String nome3 = "Maria";
+        String sobreNome3 = "Silva";
+        String telefone3 = "11997755525";
+        String email3 = "teste03@ada.com.br";
+        Contato novoContato3 = new Contato(nome3, sobreNome3, telefone3, email3);
+        agenda.adicionarContato(novoContato3);
+
+        String teste01 = String.valueOf(agenda);
+
+        System.out.println(teste01);
 
     }
 }

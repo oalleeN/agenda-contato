@@ -1,5 +1,3 @@
-package ada.tech.agenda.utilitario;
-
 import java.util.Scanner;
 
 public class Util {
