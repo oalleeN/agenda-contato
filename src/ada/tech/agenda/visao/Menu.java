@@ -21,23 +21,23 @@ public class Menu {
 
             String lista = "";
 
-            String opcoes = STR."""
-
-                    ##################
-                    ##### AGENDA #####
-                    ##################
-
-                    >>>> Contatos <<<<
-                    \{lista}
-
-                    >>>> Menu <<<<
-                    1 - Adicionar Contato
-                    2 - Detalhar Contato
-                    3 - Editar Contato
-                    4 - Remover Contato
-                    5 - Sair
-
-                    """;
+            String opcoes = String.format("""
+                    
+                            ##################
+                            ##### AGENDA #####
+                            ##################
+                            
+                            >>>> Contatos <<<<
+                            %s
+                            
+                            >>>> Menu <<<<
+                            1 - Adicionar Contato
+                            2 - Detalhar Contato
+                            3 - Editar Contato
+                            4 - Remover Contato
+                            5 - Sair
+                            
+                            """, lista);
 
             Util.escrever(opcoes);
             opcao = Integer.parseInt(Util.ler(entrada, "Digite a opcao:"));
