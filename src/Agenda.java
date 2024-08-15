@@ -1,5 +1,3 @@
-package ada.tech.agenda.modelo;
-
 import java.util.Arrays;
 
 public class Agenda {
@@ -27,4 +25,3 @@ public class Agenda {
         return Arrays.toString(listaContatos);
     }
 }
-

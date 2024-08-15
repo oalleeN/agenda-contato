@@ -1,9 +1,3 @@
-package ada.tech.agenda.visao;
-
-import ada.tech.agenda.modelo.Agenda;
-import ada.tech.agenda.modelo.Contato;
-import ada.tech.agenda.utilitario.Util;
-
 import java.util.Scanner;
 
 public class Menu {
