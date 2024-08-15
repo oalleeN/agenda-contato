@@ -30,7 +30,5 @@ public class Main {
 
         contato[1] = new Contato("Luiz", "Silva", "11997456660", "teste@dawda.com");
 
-
     }
-
 }

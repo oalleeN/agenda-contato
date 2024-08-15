@@ -16,5 +16,4 @@ public class Util {
         System.out.println(questao);
         return entrada.nextLine();
     }
-
 }
