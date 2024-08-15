@@ -26,4 +26,3 @@ public class Agenda {
         return Arrays.toString(listaContatos);
     }
 }
-
