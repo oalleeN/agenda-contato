@@ -2,6 +2,18 @@ import java.util.Arrays;
 
 public class Agenda {
 
+    public int retornaIndiceElemento(Contato[] arrayContatos, String telefone) {
+
+        for(int i = 0; i < arrayContatos.length; i++) {
+
+            if (arrayContatos[i].getTelefone().equals(telefone)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
     Contato[] listaContatos; // declaracao array listaContatos
 
     public Agenda(){     // construtor
