@@ -1,3 +1,4 @@
+import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
 
 import java.util.Arrays;
@@ -55,5 +56,24 @@ public class Agenda {
 
     }
 
+    public void excluirContato(String telefone) throws ContatoNaoEncontradoException  {
+
+        int indice = retornaIndiceElemento(listaContatos, telefone);
+
+        if (indice == -1) {
+            throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
+        }
+
+        int novoTamanho = listaContatos.length - 1;
+        Contato[] contatoBackup = new Contato[novoTamanho];
+
+        for (int i = 0, j = 0; i < listaContatos.length; i++) {
+            if (i != indice) {
+                contatoBackup[j++] = listaContatos[i];
+            }
+        }
+
+        listaContatos = contatoBackup;
+    }
 
 }
