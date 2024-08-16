@@ -1,3 +1,4 @@
+import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
 
 import java.util.Scanner;
@@ -49,9 +50,8 @@ public class Menu {
                     break;
 
                 case 4:
-
+                    menuRemoverContato();
                     break;
-
                 default:
                     Util.erro("Opcao invalida");
                     break;
@@ -78,25 +78,34 @@ public class Menu {
         Contato novoContato = new Contato(nome,sobrenome,telefone,email);
 
         try {
-            agenda.adicionarContato(novoContato); // add conttao na agenda
+            agenda.adicionarContato(novoContato);// add conttao na agenda
         }catch (TelefoneExistenteException e){
             System.out.println("**********************************************");
             System.out.println(e.getMessage()); // printa a mensagem contida no TelefoneExistenteException.java
             System.out.println("**********************************************");
-
         }
 
     }
 
-    /*
+    public void menuRemoverContato() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("******************");
+        System.out.println("EXCLUIR CONTATO"); // printa a mensagem contida no TelefoneExistenteException.java
+        System.out.println("******************");
+        System.out.print("Informe um numero de tefone: ");
+        String numeroTelefone = sc.nextLine();
 
-    Codigo que retirei [Lucas]
+        try {
+            agenda.excluirContato(numeroTelefone);
+            System.out.println();
+            System.out.println("CONTATO EXCLUIDO COM SUCESSO");
+            System.out.println();
+        } catch (ContatoNaoEncontradoException e) {
+            System.out.println();
+            System.out.println("CONTATO NÂO ENCONTRADO");
+            System.out.println();
+        }
 
-     >>>> Contatos <<<<
-     \{agenda.toString()}
-
-     Estava imprimindo o contato quando inicia o menu
-
-     */
+    }
 
 }
