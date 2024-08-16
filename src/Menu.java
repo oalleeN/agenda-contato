@@ -18,20 +18,20 @@ public class Menu {
         int opcao = 0;
 
         do {
-            String opcoes = STR."""
+            String opcoes = String.format("""
 
-                    ####################
-                    ##     𝗔𝗚𝗘𝗡𝗗𝗔     ##
-                    ####################
+                            ####################
+                            ##     𝗔𝗚𝗘𝗡𝗗𝗔     ##
+                            ####################
 
-                    >>>> Menu <<<<
-                    1 - Adicionar Contato
-                    2 - Detalhar Contato
-                    3 - Editar Contato
-                    4 - Remover Contato
-                    5 - Sair
+                            >>>> Menu <<<<
+                            1 - Adicionar Contato
+                            2 - Detalhar Contato
+                            3 - Editar Contato
+                            4 - Remover Contato
+                            5 - Sair
 
-                    """;
+                            """);
 
             Util.escrever(opcoes);
             opcao = Integer.parseInt(Util.ler(entrada, "Digite a opcao:"));
