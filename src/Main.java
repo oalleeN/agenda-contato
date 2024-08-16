@@ -5,6 +5,22 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Agenda agenda = new Agenda();
+
+        agenda.addContato(new Contato("Rafael", "Silva", "11997456560", "teste@dawda.com"));
+        agenda.addContato(new Contato("João", "Silva", "11997456561", "jozinho89@gmail.com"));
+        agenda.addContato(new Contato("Maria", "Silva", "11997456562", "mariatereza55@gmail.com"));
+        agenda.addContato(new Contato("Pedro", "Silva", "11997457777", "teste@dawda.com"));
+        agenda.addContato(new Contato("Fabiano", "Silva", "11997434777", "teste@dawda.com"));
+
+        System.out.println("Contatos:");
+
+        for (Contato contato : agenda.getContatos()) {
+            System.out.println(contato.getNome() + " - " + contato.getEmail());
+        }
+
+        ///////////////////////////////////////////////////
+
         int contador = 1 ;
         Contato[] contato = new Contato[contador];
         contato[0] = new Contato("Rafael", "Silva", "11997456560", "teste@dawda.com");
