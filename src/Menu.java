@@ -13,7 +13,7 @@ public class Menu {
         agenda= new Agenda(); // instancia da agenda
     }
 
-    public void iniciar() {
+    public void iniciar() throws ContatoNaoEncontradoException {
 
         int opcao = 0;
 
@@ -38,30 +38,35 @@ public class Menu {
 
             switch (opcao) {
                 case 1:
-                    adicionarContato();
+                    menuAdicionarContato();
                     break;
 
                 case 2:
-
+                    menuDetalharContato();
                     break;
 
                 case 3:
-
+                    menuEditarContato();
                     break;
 
                 case 4:
                     menuRemoverContato();
                     break;
+
+                case 5:
+                    System.out.println("Saindo...");
+                    break;
+
                 default:
                     Util.erro("Opcao invalida");
                     break;
             }
 
-        } while (opcao <= 4);
+        } while (opcao != 5);
 
     }
 
-    public void adicionarContato() {
+    public void menuAdicionarContato() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Informe o seu primeiro nome: ");
         String nome = sc.nextLine();
@@ -106,6 +111,24 @@ public class Menu {
             System.out.println();
         }
 
+    }
+
+    public void menuEditarContato() throws ContatoNaoEncontradoException {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Qual contato você deseja editar: ");
+        String buscarTelefone = sc.next();
+
+        agenda.editarContato(buscarTelefone);
+    }
+
+    public void menuDetalharContato() throws ContatoNaoEncontradoException {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Qual contato você deseja detalhar: ");
+        String telefone = sc.next();
+
+        agenda.detalharContato(telefone);
     }
 
 }

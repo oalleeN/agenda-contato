@@ -3,6 +3,7 @@ import ada.tech.agenda.exception.TelefoneExistenteException;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Scanner;
 
 public class Agenda {
 
@@ -43,7 +44,6 @@ public class Agenda {
         return Arrays.toString(listaContatos);
     }
 
-
     public void consultarContatoExistente(Contato novoContato) throws TelefoneExistenteException {
         // logica para verificar se o novo telefone cadastrado nao é repetido para lancar excessao - trhows
 
@@ -76,4 +76,28 @@ public class Agenda {
         listaContatos = contatoBackup;
     }
 
+    public void editarContato(String telefone) throws ContatoNaoEncontradoException {
+        Scanner sc = new Scanner(System.in);
+        int indice = retornaIndiceElemento(listaContatos, telefone);
+
+        if (indice == -1) {
+            throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
+        }
+
+        System.out.println("Informe o novo numero: ");
+        String novoNumero = sc.next();
+
+        listaContatos[indice].setTelefone(novoNumero);
+    }
+
+    public void detalharContato(String telefone) throws ContatoNaoEncontradoException {
+
+        int indice = retornaIndiceElemento(listaContatos, telefone);
+
+        if (indice == -1) {
+            throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
+        }
+
+        System.out.println(listaContatos[indice]);
+    }
 }
