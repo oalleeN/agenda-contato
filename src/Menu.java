@@ -19,12 +19,9 @@ public class Menu {
         do {
             String opcoes = STR."""
 
-                    ##################
-                    ##### AGENDA #####
-                    ##################
-
-                    >>>> Contatos <<<<
-                    \{agenda.toString()}
+                    ####################
+                    ##     𝗔𝗚𝗘𝗡𝗗𝗔     ##
+                    ####################
 
                     >>>> Menu <<<<
                     1 - Adicionar Contato
@@ -90,4 +87,16 @@ public class Menu {
         }
 
     }
+
+    /*
+
+    Codigo que retirei [Lucas]
+
+     >>>> Contatos <<<<
+     \{agenda.toString()}
+
+     Estava imprimindo o contato quando inicia o menu
+
+     */
+
 }
