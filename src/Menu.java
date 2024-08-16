@@ -1,3 +1,5 @@
+import ada.tech.agenda.exception.TelefoneExistenteException;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -78,7 +80,14 @@ public class Menu {
 
         Contato novoContato = new Contato(nome,sobrenome,telefone,email);
 
-        agenda.adicionarContato(novoContato); // add conttao na agenda
+        try {
+            agenda.adicionarContato(novoContato); // add conttao na agenda
+        }catch (TelefoneExistenteException e){
+            System.out.println("**********************************************");
+            System.out.println(e.getMessage()); // printa a mensagem contida no TelefoneExistenteException.java
+            System.out.println("**********************************************");
+
+        }
 
     }
 }

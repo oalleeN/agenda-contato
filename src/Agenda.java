@@ -1,14 +1,18 @@
+import ada.tech.agenda.exception.TelefoneExistenteException;
+
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Agenda {
 
     Contato[] listaContatos; // declaracao array listaContatos
 
-    public Agenda(){     // construtor
-        listaContatos=new Contato[0]; // inicializando a listaContatos vazia
+    public Agenda() {     // construtor
+        listaContatos = new Contato[0]; // inicializando a listaContatos vazia
     }
 
-    public void adicionarContato(Contato novoContato) {
+    public void adicionarContato(Contato novoContato) throws TelefoneExistenteException {
+        consultarContatoExistente(novoContato);
         int novoTamanho = listaContatos.length + 1;  // declarando variavel que é o tamanho atual +1
         Contato[] contatoBackup = new Contato[novoTamanho]; // declarando uma nova lista usando o novo tamanho
 
@@ -25,4 +29,19 @@ public class Agenda {
     public String toString() {
         return Arrays.toString(listaContatos);
     }
+
+
+    public void consultarContatoExistente(Contato novoContato) throws TelefoneExistenteException {
+        // logica para verificar se o novo telefone cadastrado nao é repetido para lancar excessao - trhows
+
+        for (int i = 0; i < listaContatos.length; i++) {
+            if (Objects.equals(listaContatos[i].getTelefone(), novoContato.getTelefone())) {
+                throw new TelefoneExistenteException();
+
+            }
+        }
+
+    }
+
+
 }
