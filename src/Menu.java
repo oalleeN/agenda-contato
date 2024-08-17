@@ -13,7 +13,7 @@ public class Menu {
         agenda= new Agenda(); // instancia da agenda
     }
 
-    public void iniciar() throws ContatoNaoEncontradoException {
+    public void iniciar() { //throws ContatoNaoEncontradoException {
 
         int opcao = 0;
 
@@ -113,22 +113,34 @@ public class Menu {
 
     }
 
-    public void menuEditarContato() throws ContatoNaoEncontradoException {
+    public void menuEditarContato()  { //throws ContatoNaoEncontradoException
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Qual contato você deseja editar: ");
         String buscarTelefone = sc.next();
+        try {
+            agenda.editarContato(buscarTelefone);
+        } catch (ContatoNaoEncontradoException e){
+            System.out.println("**********************************************");
+            System.out.println(e.getMessage());
+            System.out.println("**********************************************");
 
-        agenda.editarContato(buscarTelefone);
+        }
     }
 
-    public void menuDetalharContato() throws ContatoNaoEncontradoException {
+    public void menuDetalharContato()  {//throws ContatoNaoEncontradoException
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Qual contato você deseja detalhar: ");
         String telefone = sc.next();
+        try {
+            agenda.detalharContato(telefone);
+        }catch (ContatoNaoEncontradoException e){
+            System.out.println("**********************************************");
+            System.out.println(e.getMessage());
+            System.out.println("**********************************************");
 
-        agenda.detalharContato(telefone);
+        }
     }
 
 }
