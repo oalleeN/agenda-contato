@@ -18,23 +18,39 @@ public class Menu {
         int opcao = 0;
 
         do {
-            String opcoes = String.format("""
-
-                            ####################
-                            ##     𝗔𝗚𝗘𝗡𝗗𝗔     ##
-                            ####################
-
-                            >>>> Menu <<<<
-                            1 - Adicionar Contato
-                            2 - Detalhar Contato
-                            3 - Editar Contato
-                            4 - Remover Contato
-                            5 - Sair
-
-                            """);
+            String opcoes = """
+    
+                        / ============================== \\
+                        |             𝗔𝗚𝗘𝗡𝗗𝗔             |
+                        \\ ============================== /
+    
+                        / ============ Menu ============ \\
+                        | 1 - Adicionar Contato          |
+                        | 2 - Detalhar Contato           |
+                        | 3 - Editar Contato             |
+                        | 4 - Remover Contato            |
+                        | 5 - Sair                       |
+                        \\ ============================== /
+                        """;
 
             Util.escrever(opcoes);
-            opcao = Integer.parseInt(Util.ler(entrada, "Digite a opcao:"));
+            System.out.print("Digite uma opção: ");
+            String opcaoString = entrada.next();
+
+            try {
+                opcao = Integer.parseInt(opcaoString);
+                entrada.nextLine();
+            } catch (NumberFormatException e) {
+                System.err.println("ERRO! Informe uma opção válida!\n");
+                continue;
+            }
+
+            // Mensagem de erro para opções inválidas
+            if (opcao < 1 || opcao > 5) {
+                Util.erro("ERRO! Informe uma opção válida!");
+            }
+
+            System.out.println();
 
             switch (opcao) {
                 case 1:
@@ -58,89 +74,68 @@ public class Menu {
                     break;
 
                 default:
-                    Util.erro("Opcao invalida");
                     break;
             }
 
         } while (opcao != 5);
-
     }
 
     public void menuAdicionarContato() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Informe o seu primeiro nome: ");
-        String nome = sc.nextLine();
+        System.out.print("Informe o seu primeiro nome: ");
+        String nome = entrada.nextLine();
 
-        System.out.println("Informe o seu sobrenome: ");
-        String sobrenome = sc.nextLine();
+        System.out.print("\nInforme o seu sobrenome: ");
+        String sobrenome = entrada.nextLine();
 
-        System.out.println("Informe o seu telefone: ");
-        String telefone = sc.nextLine();
+        System.out.print("\nInforme o seu telefone: ");
+        String telefone = entrada.nextLine();
 
-        System.out.println("Informe o meu Email: ");
-        String email = sc.nextLine();
+        System.out.print("\nInforme o meu Email: ");
+        String email = entrada.nextLine();
 
-        Contato novoContato = new Contato(nome,sobrenome,telefone,email);
+        Contato novoContato = new Contato(nome, sobrenome, telefone, email);
 
         try {
-            agenda.adicionarContato(novoContato);// add conttao na agenda
+            agenda.adicionarContato(novoContato);
+            System.out.println("\nCONTATO ADICIONADO!");
         }catch (TelefoneExistenteException e){
-            System.out.println("**********************************************");
-            System.out.println(e.getMessage()); // printa a mensagem contida no TelefoneExistenteException.java
-            System.out.println("**********************************************");
+            System.err.println(e.getMessage());
         }
-
     }
 
     public void menuRemoverContato() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("******************");
-        System.out.println("EXCLUIR CONTATO"); // printa a mensagem contida no TelefoneExistenteException.java
-        System.out.println("******************");
-        System.out.print("Informe um numero de tefone: ");
-        String numeroTelefone = sc.nextLine();
+        System.out.println("\\ ============================== \\");
+        System.out.println("=         EXCLUIR CONTATO         =");
+        System.out.println("\\ ============================== /");
+        System.out.print("\nInforme um número de tefone: ");
+        String numeroTelefone = entrada.nextLine();
 
         try {
             agenda.excluirContato(numeroTelefone);
-            System.out.println();
-            System.out.println("CONTATO EXCLUIDO COM SUCESSO");
-            System.out.println();
+            System.out.println("\nCONTATO EXCLUIDO COM SUCESSO!");
         } catch (ContatoNaoEncontradoException e) {
-            System.out.println();
-            System.out.println("CONTATO NÂO ENCONTRADO");
-            System.out.println();
+            System.err.println(e.getMessage());
         }
-
     }
 
     public void menuEditarContato()  { //throws ContatoNaoEncontradoException
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Qual contato você deseja editar: ");
-        String buscarTelefone = sc.next();
+        System.out.print("Qual contato você deseja editar: ");
+        String buscarTelefone = entrada.nextLine();
         try {
             agenda.editarContato(buscarTelefone);
+            System.out.println("\nCONTATO EDITADO!");
         } catch (ContatoNaoEncontradoException e){
-            System.out.println("**********************************************");
-            System.out.println(e.getMessage());
-            System.out.println("**********************************************");
-
+            System.err.println(e.getMessage());
         }
     }
 
     public void menuDetalharContato()  {//throws ContatoNaoEncontradoException
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Qual contato você deseja detalhar: ");
-        String telefone = sc.next();
+        System.out.print("Qual contato você deseja detalhar: ");
+        String telefone = entrada.next();
         try {
             agenda.detalharContato(telefone);
         }catch (ContatoNaoEncontradoException e){
-            System.out.println("**********************************************");
-            System.out.println(e.getMessage());
-            System.out.println("**********************************************");
-
+            System.err.println(e.getMessage());
         }
     }
-
 }

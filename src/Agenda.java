@@ -50,10 +50,8 @@ public class Agenda {
         for (int i = 0; i < listaContatos.length; i++) {
             if (Objects.equals(listaContatos[i].getTelefone(), novoContato.getTelefone())) {
                 throw new TelefoneExistenteException();
-
             }
         }
-
     }
 
     public void excluirContato(String telefone) throws ContatoNaoEncontradoException {
@@ -85,7 +83,7 @@ public class Agenda {
         }
 
         System.out.println("Informe o novo numero: ");
-        String novoNumero = sc.next();
+        String novoNumero = sc.nextLine();
 
         listaContatos[indice].setTelefone(novoNumero);
     }

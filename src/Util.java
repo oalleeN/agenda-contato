@@ -10,8 +10,8 @@ public class Util {
         System.err.println(mensagem);
     }
 
-    public static String ler(Scanner entrada, String questao) {
-        System.out.println(questao);
-        return entrada.nextLine();
+    public static int ler(Scanner entrada, String questao) {
+            System.out.println(questao);
+            return entrada.nextInt();
     }
 }

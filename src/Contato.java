@@ -16,13 +16,13 @@ public class Contato {
     public String toString() {
         return String.format("""
 
-                ############################
-                ##### DADOS DO CONTATO #####
-                ############################
-
-                Nome: %s %s
-                Telefone: %s
-                E-mail: %s
+                / ==============================
+                | DADOS DO CONTATO             =
+                | ==============================
+                | Nome: %s %s
+                | Telefone: %s
+                | E-mail: %s
+                \\ ==============================
                 """, nome, sobreNome, telefone, email);
         }
 
