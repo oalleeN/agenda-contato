@@ -37,6 +37,8 @@ public class Agenda {
         contatoBackup[contatoBackup.length - 1] = novoContato; // add ultimo item na nova posicao da lista
 
         listaContatos = contatoBackup;
+
+        definirID();
     }
 
     @Override
@@ -72,6 +74,8 @@ public class Agenda {
         }
 
         listaContatos = contatoBackup;
+
+        definirID();
     }
 
     public void editarContato(String telefone) throws ContatoNaoEncontradoException {
@@ -82,10 +86,29 @@ public class Agenda {
             throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
         }
 
-        System.out.println("Informe o novo numero: ");
-        String novoNumero = sc.nextLine();
+        String Seletor = Menu.subMenuEditarContato();
 
-        listaContatos[indice].setTelefone(novoNumero);
+        if (Seletor == "Nome") {
+            System.out.print("Informe o primeiro nome: ");
+            String novoNome = sc.next();
+            listaContatos[indice].setNome(novoNome);
+            System.out.print("Informe o seu sobrenome: ");
+            String novoSobrenome = sc.next();
+            listaContatos[indice].setSobreNome(novoSobrenome);
+        }
+
+        if (Seletor == "Telefone") {
+            System.out.print("Informe o novo numero: ");
+            String novoNumero = sc.next();
+            listaContatos[indice].setTelefone(novoNumero);
+        }
+
+        if (Seletor == "Email") {
+            System.out.print("Informe o novo email: ");
+            String novoEmail = sc.next();
+            listaContatos[indice].setEmail(novoEmail);
+        }
+
     }
 
     public void detalharContato(String telefone) throws ContatoNaoEncontradoException {
@@ -98,4 +121,29 @@ public class Agenda {
 
         System.out.println(listaContatos[indice]);
     }
+
+    public void definirID() {
+        for (int i = 0; i < listaContatos.length; i++) {
+            listaContatos[i].setID(i+1);
+        }
+    }
+
+    public void exibirAgendaCompleta() {
+        System.out.println();
+        System.out.println("------------------------");
+        System.out.println("   CONTATOS DA AGENDA  ");
+        System.out.println("------------------------");
+        System.out.println();
+        System.out.println("ID  | Nome Completo   | Telefone       | E-mail");
+        for (int i = 0; i < listaContatos.length; i++) {
+            System.out.println(String.format("%-3d | %-15s | %-12s | %s",
+                    listaContatos[i].getID(),
+                    listaContatos[i].getNome() + " " + listaContatos[i].getSobreNome(),
+                    listaContatos[i].getTelefone(),
+                    listaContatos[i].getEmail()
+            ));;
+        }
+        System.out.println();
+    }
+
 }
