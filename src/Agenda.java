@@ -47,8 +47,8 @@ public class Agenda {
     }
 
     public void consultarContatoExistente(Contato novoContato) throws TelefoneExistenteException {
-        // logica para verificar se o novo telefone cadastrado nao é repetido para lancar excessao - trhows
 
+        // logica para verificar se o novo telefone cadastrado nao é repetido para lancar excessao - trhows
         for (int i = 0; i < listaContatos.length; i++) {
             if (Objects.equals(listaContatos[i].getTelefone(), novoContato.getTelefone())) {
                 throw new TelefoneExistenteException();
@@ -103,7 +103,7 @@ public class Agenda {
             String novoNumero = sc.next();
 
             if (retornaIndiceElemento(listaContatos, novoNumero) != -1 || !novoNumero.matches("\\d+")) {
-                System.err.println("ERRO! Este número não pode ser adicionado.");
+                System.out.println("ERRO! Este número não pode ser adicionado.");
             } else {
                 listaContatos[indice].setTelefone(novoNumero);
                 System.out.println("\nCONTATO EDITADO!");
@@ -115,7 +115,7 @@ public class Agenda {
             String novoEmail = sc.nextLine();
 
             if (!novoEmail.contains("@")) {
-                System.err.println("ERRO! O e-mail deve conter '@' e ter um formato válido.");
+                System.out.println("ERRO! O e-mail deve conter '@' e ter um formato válido.");
             } else {
                 listaContatos[indice].setEmail(novoEmail);
                 System.out.println("\nCONTATO EDITADO!");
@@ -154,6 +154,7 @@ public class Agenda {
 
         return telefone;
     }
+
     public void exibirAgendaCompleta() {
 
         int tamanhoId = 3;
@@ -173,6 +174,7 @@ public class Agenda {
                     formatarTelefone(contato.getTelefone()),
                     contato.getEmail()
             );
+            System.out.println("=" + "-".repeat(tamanhoId + tamanhoNome + tamanhoTelefone + tamanhoEmail + 11) + "=");
         }
         System.out.println();
     }

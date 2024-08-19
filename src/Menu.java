@@ -99,7 +99,7 @@ public class Menu {
             if (telefone.matches("\\d+")) {
                 break;
             } else {
-                System.err.println("\nERRO! O telefone deve conter apenas números.");
+                System.out.println("\nERRO! O telefone deve conter apenas números.");
             }
         }
 
@@ -111,7 +111,7 @@ public class Menu {
             if (email.contains("@")) {
                 break;
             } else {
-                System.err.println("\nERRO! O e-mail deve conter '@' e ter um formato válido.");
+                System.out.println("\nERRO! O e-mail deve conter '@' e ter um formato válido.");
             }
         }
 
@@ -123,7 +123,8 @@ public class Menu {
             agenda.adicionarContato(novoContato);
             System.out.println("\nCONTATO ADICIONADO!");
         } catch (TelefoneExistenteException e) {
-            System.err.println(e.getMessage());
+            System.out.println();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -138,7 +139,7 @@ public class Menu {
             agenda.excluirContato(numeroTelefone);
             System.out.println("\nCONTATO EXCLUIDO COM SUCESSO!");
         } catch (ContatoNaoEncontradoException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -148,7 +149,7 @@ public class Menu {
         try {
             agenda.editarContato(buscarTelefone);
         } catch (ContatoNaoEncontradoException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -158,7 +159,7 @@ public class Menu {
         try {
             agenda.detalharContato(telefone);
         } catch (ContatoNaoEncontradoException e) {
-            System.err.println(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 
@@ -192,8 +193,7 @@ public class Menu {
                 case 3:
                     return "Email";
                 case 4:
-                    Menu menu = new Menu();
-                    menu.iniciar();
+                    return "";
                 default:
                     Util.erro("Opcao invalida");
             }
