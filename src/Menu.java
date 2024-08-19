@@ -19,17 +19,18 @@ public class Menu {
 
         do {
             String opcoes = """
-                    
+                                        
                     / ============================== \\
                     |             𝗔𝗚𝗘𝗡𝗗𝗔             |
                     \\ ============================== /
-                    
+                                        
                     / ============ Menu ============ \\
                     | 1 - Adicionar Contato          |
                     | 2 - Detalhar Contato           |
                     | 3 - Editar Contato             |
                     | 4 - Remover Contato            |
-                    | 5 - Sair                       |
+                    | 5 - Listar Contatos            |
+                    | 6 - Sair                       |
                     \\ ============================== /
                     """;
 
@@ -70,6 +71,10 @@ public class Menu {
                     break;
 
                 case 5:
+                    listarContatos();
+                    break;
+
+                case 6:
                     System.out.println("Saindo...");
                     break;
 
@@ -77,7 +82,7 @@ public class Menu {
                     break;
             }
 
-        } while (opcao != 5);
+        } while (opcao != 6);
     }
 
     public void menuAdicionarContato() {
@@ -179,6 +184,27 @@ public class Menu {
         } while (opcao != 4);
 
         return seletor;
+    }
+
+
+    public void listarContatos() {
+        System.out.println();
+        System.out.println("----------------------------------------------------------------------");
+        System.out.println("                     CONTATOS DA AGENDA  ");
+        System.out.println("----------------------------------------------------------------------");
+        System.out.println();
+        System.out.println("ID  | Nome Completo   | Telefone       | E-mail");
+        Contato[] contatos = agenda.getListaContatos();
+        for (int i = 0; i < contatos.length; i++) {
+            System.out.println(String.format("%-3d | %-15s | %-12s | %s",
+                    contatos[i].getID(),
+                    contatos[i].getNome() + " " + contatos[i].getSobreNome(),
+                    contatos[i].getTelefone(),
+                    contatos[i].getEmail()
+            ));
+
+            System.out.println();
+        }
     }
 }
 

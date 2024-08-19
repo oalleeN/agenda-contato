@@ -128,22 +128,32 @@ public class Agenda {
         }
     }
 
-    public void exibirAgendaCompleta() {
-        System.out.println();
-        System.out.println("------------------------");
-        System.out.println("   CONTATOS DA AGENDA  ");
-        System.out.println("------------------------");
-        System.out.println();
-        System.out.println("ID  | Nome Completo   | Telefone       | E-mail");
-        for (int i = 0; i < listaContatos.length; i++) {
-            System.out.println(String.format("%-3d | %-15s | %-12s | %s",
-                    listaContatos[i].getID(),
-                    listaContatos[i].getNome() + " " + listaContatos[i].getSobreNome(),
-                    listaContatos[i].getTelefone(),
-                    listaContatos[i].getEmail()
-            ));;
-        }
-        System.out.println();
+    public Contato[] getListaContatos(){
+        return listaContatos;
     }
+
+
+
+
+
+
+
+//    public void exibirAgendaCompleta() {
+//        System.out.println();
+//        System.out.println("------------------------");
+//        System.out.println("   CONTATOS DA AGENDA  ");
+//        System.out.println("------------------------");
+//        System.out.println();
+//        System.out.println("ID  | Nome Completo   | Telefone       | E-mail");
+//        for (int i = 0; i < listaContatos.length; i++) {
+//            System.out.println(String.format("%-3d | %-15s | %-12s | %s",
+//                    listaContatos[i].getID(),
+//                    listaContatos[i].getNome() + " " + listaContatos[i].getSobreNome(),
+//                    listaContatos[i].getTelefone(),
+//                    listaContatos[i].getEmail()
+//            ));;
+//        }
+//        System.out.println();
+//    }
 
 }
