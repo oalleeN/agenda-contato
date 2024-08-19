@@ -13,11 +13,14 @@ public class Menu {
         agenda = new Agenda(); // instancia da agenda
     }
 
-    public void iniciar() { //throws ContatoNaoEncontradoException {
+    public void iniciar() {
 
         int opcao = 0;
 
         do {
+            System.out.println();
+            agenda.exibirAgendaCompleta();
+
             String opcoes = """
                     
                     / ============================== \\
@@ -81,17 +84,36 @@ public class Menu {
     }
 
     public void menuAdicionarContato() {
+
         System.out.print("Informe o seu primeiro nome: ");
         String nome = entrada.nextLine();
 
         System.out.print("\nInforme o seu sobrenome: ");
         String sobrenome = entrada.nextLine();
 
-        System.out.print("\nInforme o seu telefone: ");
-        String telefone = entrada.nextLine();
+        String telefone;
+        while (true) {
+            System.out.print("\nInforme o seu telefone: ");
+            telefone = entrada.nextLine();
 
-        System.out.print("\nInforme o meu Email: ");
-        String email = entrada.nextLine();
+            if (telefone.matches("\\d+")) {
+                break;
+            } else {
+                System.err.println("\nERRO! O telefone deve conter apenas números.");
+            }
+        }
+
+        String email;
+        while (true) {
+            System.out.print("\nInforme o seu e-mail: ");
+            email = entrada.nextLine();
+
+            if (email.contains("@")) {
+                break;
+            } else {
+                System.err.println("\nERRO! O e-mail deve conter '@' e ter um formato válido.");
+            }
+        }
 
         int ID = 0;
 
@@ -106,8 +128,8 @@ public class Menu {
     }
 
     public void menuRemoverContato() {
-        System.out.println("\\ ============================== \\");
-        System.out.println("=         EXCLUIR CONTATO         =");
+        System.out.println("/ ============================== \\");
+        System.out.println("|         EXCLUIR CONTATO         |");
         System.out.println("\\ ============================== /");
         System.out.print("\nInforme um número de tefone: ");
         String numeroTelefone = entrada.nextLine();
@@ -120,18 +142,17 @@ public class Menu {
         }
     }
 
-    public void menuEditarContato() { //throws ContatoNaoEncontradoException
+    public void menuEditarContato() {
         System.out.print("Qual contato você deseja editar: ");
         String buscarTelefone = entrada.nextLine();
         try {
             agenda.editarContato(buscarTelefone);
-            System.out.println("\nCONTATO EDITADO!");
         } catch (ContatoNaoEncontradoException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public void menuDetalharContato() {//throws ContatoNaoEncontradoException
+    public void menuDetalharContato() {
         System.out.print("Qual contato você deseja detalhar: ");
         String telefone = entrada.next();
         try {
@@ -147,18 +168,18 @@ public class Menu {
         String seletor = "";
         do {
             System.out.println();
-            System.out.println("**********************");
-            System.out.println("EDITAR CONTATO");
-            System.out.println("**********************");
-            System.out.println();
-            System.out.println("Qual informação deseja editar: ");
-            System.out.println();
-            System.out.println("1 - Nome Completo");
-            System.out.println("2 - Telefone");
-            System.out.println("3 - E-mail");
-            System.out.println("4 - Voltar ao menu principal");
+            System.out.println("/ ============================== \\");
+            System.out.println("|         EDITAR CONTATO         |");
+            System.out.println("\\ ============================= /");
+            System.out.println("\nQual informação deseja editar? \n");
+            System.out.println("/ ============================== \\");
+            System.out.println("| 1 - Nome Completo              |");
+            System.out.println("| 2 - Telefone                   |");
+            System.out.println("| 3 - E-mail                     |");
+            System.out.println("| 4 - Voltar ao menu principal   |");
+            System.out.println("\\ ============================= /");
 
-            System.out.print("Digite a opção desejada: ");
+            System.out.print("\nDigite a opção desejada: ");
             opcao = sc.nextInt();
             sc.nextLine();
 
@@ -181,36 +202,3 @@ public class Menu {
         return seletor;
     }
 }
-
-    /*public void subMenuDetalharContato () {
-        Scanner sc = new Scanner(System.in);
-        int opcao = 0;
-        do {
-            System.out.println("********************** ");
-            System.out.println("DETALHAR CONTATO");
-            System.out.println("********************** ");
-            System.out.println();
-            System.out.println("1 - Exibir a agenda completa");
-            System.out.println("2 - Exibir contato único");
-            System.out.println("3 - Voltar ao menu prinicipal");
-            System.out.println();
-            System.out.print("Digite a opção desejada: ");
-            opcao = sc.nextInt();
-            sc.nextLine();
-
-            switch (opcao) {
-                case 1:
-                    agenda.exibirAgendaCompleta();
-                    break;
-                case 2:
-                    menuDetalharContato();
-                    break;
-                case 3:
-                    Menu menu=new Menu();
-                    menu.iniciar();
-                    break;
-                default:
-                    System.out.println("Opção inválida");
-            }
-        } while (opcao != 3);
-    }*/

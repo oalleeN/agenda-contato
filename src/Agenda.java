@@ -86,29 +86,41 @@ public class Agenda {
             throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
         }
 
-        String Seletor = Menu.subMenuEditarContato();
+        String seletor = Menu.subMenuEditarContato();
 
-        if (Seletor == "Nome") {
-            System.out.print("Informe o primeiro nome: ");
+        if (seletor.equals("Nome")) {
+            System.out.print("\nInforme o primeiro nome: ");
             String novoNome = sc.next();
             listaContatos[indice].setNome(novoNome);
-            System.out.print("Informe o seu sobrenome: ");
+            System.out.print("\nInforme o seu sobrenome: ");
             String novoSobrenome = sc.next();
             listaContatos[indice].setSobreNome(novoSobrenome);
+            System.out.println("\nCONTATO EDITADO!");
         }
 
-        if (Seletor == "Telefone") {
-            System.out.print("Informe o novo numero: ");
+        if (seletor.equals("Telefone")) {
+            System.out.print("\nInforme o novo número: ");
             String novoNumero = sc.next();
-            listaContatos[indice].setTelefone(novoNumero);
+
+            if (retornaIndiceElemento(listaContatos, novoNumero) != -1 || !novoNumero.matches("\\d+")) {
+                System.err.println("ERRO! Este número não pode ser adicionado.");
+            } else {
+                listaContatos[indice].setTelefone(novoNumero);
+                System.out.println("\nCONTATO EDITADO!");
+            }
         }
 
-        if (Seletor == "Email") {
-            System.out.print("Informe o novo email: ");
-            String novoEmail = sc.next();
-            listaContatos[indice].setEmail(novoEmail);
-        }
+        if (seletor.equals("Email")) {
+            System.out.print("\nInforme o seu e-mail: ");
+            String novoEmail = sc.nextLine();
 
+            if (!novoEmail.contains("@")) {
+                System.err.println("ERRO! O e-mail deve conter '@' e ter um formato válido.");
+            } else {
+                listaContatos[indice].setEmail(novoEmail);
+                System.out.println("\nCONTATO EDITADO!");
+            }
+        }
     }
 
     public void detalharContato(String telefone) throws ContatoNaoEncontradoException {
@@ -128,22 +140,40 @@ public class Agenda {
         }
     }
 
+    public String formatarNome(String nome) {
+        return Character.toUpperCase(nome.charAt(0)) + nome.substring(1).toLowerCase();
+    }
+
+    private String formatarTelefone(String telefone) {
+        if (telefone.length() == 11) {
+            return String.format("(%s) %s-%s",
+                    telefone.substring(0, 2),
+                    telefone.substring(2, 7),
+                    telefone.substring(7));
+        }
+
+        return telefone;
+    }
     public void exibirAgendaCompleta() {
-        System.out.println();
-        System.out.println("------------------------");
-        System.out.println("   CONTATOS DA AGENDA  ");
-        System.out.println("------------------------");
-        System.out.println();
-        System.out.println("ID  | Nome Completo   | Telefone       | E-mail");
-        for (int i = 0; i < listaContatos.length; i++) {
-            System.out.println(String.format("%-3d | %-15s | %-12s | %s",
-                    listaContatos[i].getID(),
-                    listaContatos[i].getNome() + " " + listaContatos[i].getSobreNome(),
-                    listaContatos[i].getTelefone(),
-                    listaContatos[i].getEmail()
-            ));;
+
+        int tamanhoId = 3;
+        int tamanhoNome = 15;
+        int tamanhoTelefone = 18;
+        int tamanhoEmail = 25;
+
+        System.out.println("=" + "-".repeat(tamanhoId + tamanhoNome + tamanhoTelefone + tamanhoEmail + 11) + "=");
+        System.out.printf("| %-" + tamanhoId + "s | %-" + tamanhoNome + "s | %-" + tamanhoTelefone + "s | %-" + tamanhoEmail + "s |%n",
+                "ID", "Nome Completo", "Telefone", "E-mail");
+        System.out.println("=" + "-".repeat(tamanhoId + tamanhoNome + tamanhoTelefone + tamanhoEmail + 11) + "=");
+
+        for (Contato contato : listaContatos) {
+            System.out.printf("| %-" + tamanhoId + "d | %-" + tamanhoNome + "s | %-" + tamanhoTelefone + "s | %-" + tamanhoEmail + "s |%n",
+                    contato.getID(),
+                    formatarNome(contato.getNome()) + " " + formatarNome(contato.getSobreNome()),
+                    formatarTelefone(contato.getTelefone()),
+                    contato.getEmail()
+            );
         }
         System.out.println();
     }
-
 }
