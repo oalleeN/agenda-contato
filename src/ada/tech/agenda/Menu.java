@@ -1,12 +1,17 @@
+package ada.tech.agenda;
+
 import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
+import ada.tech.agenda.model.Agenda;
+import ada.tech.agenda.model.Contato;
+import ada.tech.agenda.util.Util;
 
 import java.util.Scanner;
 
 public class Menu {
 
     private final Scanner entrada;
-    private Agenda agenda; // variavel local agenda dentro classe Menu
+    private Agenda agenda; // variavel local agenda dentro classe ada.tech.agenda.Menu
 
     public Menu() {
         this.entrada = new Scanner(System.in);

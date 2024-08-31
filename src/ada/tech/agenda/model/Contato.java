@@ -1,3 +1,5 @@
+package ada.tech.agenda.model;
+
 public class Contato {
 
     private String nome;

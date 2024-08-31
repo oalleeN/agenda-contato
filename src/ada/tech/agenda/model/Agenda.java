@@ -1,3 +1,6 @@
+package ada.tech.agenda.model;
+
+import ada.tech.agenda.Menu;
 import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
 
