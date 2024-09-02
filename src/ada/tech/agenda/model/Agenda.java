@@ -4,59 +4,55 @@ import ada.tech.agenda.Menu;
 import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
 
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 public class Agenda {
 
-    public int retornaIndiceElemento(Contato[] arrayContatos, String telefone) {
+    //Contato[] listaContatos; // declaracao array listaContatos
 
-        for (int i = 0; i < arrayContatos.length; i++) {
+    List<Contato> listaContatos;
 
-            if (arrayContatos[i].getTelefone().equals(telefone)) {
+    public Agenda() {     // construtor
+        listaContatos = new ArrayList<>(); // inicializando a listaContatos vazia
+    }
+
+    private void gravarContatos() {
+
+        try (FileWriter escrever = new FileWriter("agenda.txt")) {
+            escrever.write(listaContatos.toString());
+        } catch (IOException e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+
+    public int retornaIndiceElemento(List<Contato> arrayContatos, String telefone) {
+        for (int i = 0; i < arrayContatos.size(); i++) {
+
+            if (arrayContatos.get(i).getTelefone().equals(telefone)) {
                 return i;
             }
         }
-
         return -1;
     }
 
-    Contato[] listaContatos; // declaracao array listaContatos
-
-    public Agenda() {     // construtor
-        listaContatos = new Contato[0]; // inicializando a listaContatos vazia
-    }
-
     public void adicionarContato(Contato novoContato) throws TelefoneExistenteException {
-        consultarContatoExistente(novoContato);
-        int novoTamanho = listaContatos.length + 1;  // declarando variavel que é o tamanho atual +1
-        Contato[] contatoBackup = new Contato[novoTamanho]; // declarando uma nova lista usando o novo tamanho
+        int indice = retornaIndiceElemento(listaContatos, novoContato.getTelefone());
 
-        for (int i = 0; i < listaContatos.length; i++) {
-            contatoBackup[i] = listaContatos[i];   // copiando os itens da lista atual para a nova lista
+        if (indice != -1) {
+            throw new TelefoneExistenteException();
         }
 
-        contatoBackup[contatoBackup.length - 1] = novoContato; // add ultimo item na nova posicao da lista
-
-        listaContatos = contatoBackup;
-
+        listaContatos.add(novoContato);
         definirID();
+
+        gravarContatos();
     }
 
     @Override
     public String toString() {
-        return Arrays.toString(listaContatos);
-    }
-
-    public void consultarContatoExistente(Contato novoContato) throws TelefoneExistenteException {
-
-        // logica para verificar se o novo telefone cadastrado nao é repetido para lancar excessao - trhows
-        for (int i = 0; i < listaContatos.length; i++) {
-            if (Objects.equals(listaContatos[i].getTelefone(), novoContato.getTelefone())) {
-                throw new TelefoneExistenteException();
-            }
-        }
+        return listaContatos.toString();
     }
 
     public void excluirContato(String telefone) throws ContatoNaoEncontradoException {
@@ -64,21 +60,14 @@ public class Agenda {
         int indice = retornaIndiceElemento(listaContatos, telefone);
 
         if (indice == -1) {
-            throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
+            throw new ContatoNaoEncontradoException();
         }
 
-        int novoTamanho = listaContatos.length - 1;
-        Contato[] contatoBackup = new Contato[novoTamanho];
-
-        for (int i = 0, j = 0; i < listaContatos.length; i++) {
-            if (i != indice) {
-                contatoBackup[j++] = listaContatos[i];
-            }
-        }
-
-        listaContatos = contatoBackup;
+        listaContatos.remove(indice);
 
         definirID();
+
+        gravarContatos();
     }
 
     public void editarContato(String telefone) throws ContatoNaoEncontradoException {
@@ -86,43 +75,64 @@ public class Agenda {
         int indice = retornaIndiceElemento(listaContatos, telefone);
 
         if (indice == -1) {
-            throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
+            throw new ContatoNaoEncontradoException();
         }
+
+        Contato contato = listaContatos.get(indice);
 
         String seletor = Menu.subMenuEditarContato();
 
-        if (seletor.equals("Nome")) {
-            System.out.print("\nInforme o primeiro nome: ");
-            String novoNome = sc.next();
-            listaContatos[indice].setNome(novoNome);
-            System.out.print("\nInforme o seu sobrenome: ");
-            String novoSobrenome = sc.next();
-            listaContatos[indice].setSobreNome(novoSobrenome);
+        switch (seletor.toUpperCase()) {
+            case "NOME":
+                editarNome(contato);
+                break;
+            case "TELEFONE":
+                editarTelefone(contato);
+                break;
+            case "EMAIL":
+                editarEmail(contato);
+                break;
+            default:
+                System.out.println("Opção inválida!");
+        }
+
+        gravarContatos();
+    }
+
+    private void editarNome(Contato contato) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nInforme o primeiro nome: ");
+        String novoNome = sc.next();
+        contato.setNome(novoNome);
+        System.out.print("\nInforme o seu sobrenome: ");
+        String novoSobrenome = sc.next();
+        contato.setSobreNome(novoSobrenome);
+        System.out.println("\nCONTATO EDITADO!");
+    }
+
+    private void editarTelefone(Contato contato) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nInforme o novo número: ");
+        String novoNumero = sc.next();
+
+        if (retornaIndiceElemento(listaContatos, novoNumero) != -1 || !novoNumero.matches("\\d+")) {
+            System.out.println("ERRO! Este número não pode ser adicionado.");
+        } else {
+            contato.setTelefone(novoNumero);
             System.out.println("\nCONTATO EDITADO!");
         }
+    }
 
-        if (seletor.equals("Telefone")) {
-            System.out.print("\nInforme o novo número: ");
-            String novoNumero = sc.next();
+    private void editarEmail(Contato contato) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("\nInforme o seu e-mail: ");
+        String novoEmail = sc.nextLine();
 
-            if (retornaIndiceElemento(listaContatos, novoNumero) != -1 || !novoNumero.matches("\\d+")) {
-                System.out.println("ERRO! Este número não pode ser adicionado.");
-            } else {
-                listaContatos[indice].setTelefone(novoNumero);
-                System.out.println("\nCONTATO EDITADO!");
-            }
-        }
-
-        if (seletor.equals("Email")) {
-            System.out.print("\nInforme o seu e-mail: ");
-            String novoEmail = sc.nextLine();
-
-            if (!novoEmail.contains("@")) {
-                System.out.println("ERRO! O e-mail deve conter '@' e ter um formato válido.");
-            } else {
-                listaContatos[indice].setEmail(novoEmail);
-                System.out.println("\nCONTATO EDITADO!");
-            }
+        if (!novoEmail.contains("@")) {
+            System.out.println("ERRO! O e-mail deve conter '@' e ter um formato válido.");
+        } else {
+            contato.setEmail(novoEmail);
+            System.out.println("\nCONTATO EDITADO!");
         }
     }
 
@@ -134,12 +144,12 @@ public class Agenda {
             throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
         }
 
-        System.out.println(listaContatos[indice]);
+        System.out.println(listaContatos.get(indice));
     }
 
-    public void definirID() {
-        for (int i = 0; i < listaContatos.length; i++) {
-            listaContatos[i].setID(i+1);
+    private void definirID() {
+        for (int i = 0; i < listaContatos.size(); i++) {
+            listaContatos.get(i).setID(i+1);
         }
     }
 
