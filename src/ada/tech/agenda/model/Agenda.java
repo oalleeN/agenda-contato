@@ -5,8 +5,7 @@ import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
 import ada.tech.agenda.util.Persistencia;
 
-import java.io.FileWriter;
-import java.io.IOException;
+
 import java.util.*;
 
 public class Agenda {
@@ -17,20 +16,8 @@ public class Agenda {
 
 
         this.listaContatos =  Persistencia.lerArquivoAgenda();
-        if(listaContatos == null) {
 
-            listaContatos = new ArrayList<>(); // inicializando a listaContatos vazia
-        }
     }
-
-/*    private void gravarContatos() {
-
-        try (FileWriter escrever = new FileWriter("agenda.txt")) {
-            escrever.write(listaContatos.toString());
-        } catch (IOException e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }*/
 
     public int retornaIndiceElemento(List<Contato> arrayContatos, String telefone) {
         for (int i = 0; i < arrayContatos.size(); i++) {
@@ -40,6 +27,25 @@ public class Agenda {
             }
         }
         return -1;
+    }
+
+    public List<Contato> buscarContatoPorNome(String nomeContato) throws ContatoNaoEncontradoException {
+
+        List<Contato> contatoBuscado = new ArrayList<>();
+
+        for(Contato contato : listaContatos) {
+            if(contato.getNome().equals(nomeContato)) {
+                contatoBuscado.add(contato);
+            }
+        }
+
+        if(contatoBuscado.isEmpty()) {
+            throw new ContatoNaoEncontradoException();
+        } else {
+
+            return contatoBuscado;
+        }
+
     }
 
     public void adicionarContato(Contato novoContato) throws TelefoneExistenteException {
