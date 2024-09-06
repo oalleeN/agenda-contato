@@ -3,6 +3,7 @@ package ada.tech.agenda.model;
 import ada.tech.agenda.Menu;
 import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
+import ada.tech.agenda.util.Persistencia;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,22 +11,26 @@ import java.util.*;
 
 public class Agenda {
 
-    //Contato[] listaContatos; // declaracao array listaContatos
-
     List<Contato> listaContatos;
 
-    public Agenda() {     // construtor
-        listaContatos = new ArrayList<>(); // inicializando a listaContatos vazia
+    public Agenda() { // construtor
+
+
+        this.listaContatos =  Persistencia.lerArquivoAgenda();
+        if(listaContatos == null) {
+
+            listaContatos = new ArrayList<>(); // inicializando a listaContatos vazia
+        }
     }
 
-    private void gravarContatos() {
+/*    private void gravarContatos() {
 
         try (FileWriter escrever = new FileWriter("agenda.txt")) {
             escrever.write(listaContatos.toString());
         } catch (IOException e) {
             System.out.println("Erro: " + e.getMessage());
         }
-    }
+    }*/
 
     public int retornaIndiceElemento(List<Contato> arrayContatos, String telefone) {
         for (int i = 0; i < arrayContatos.size(); i++) {
@@ -47,7 +52,7 @@ public class Agenda {
         listaContatos.add(novoContato);
         definirID();
 
-        gravarContatos();
+        Persistencia.gravarContatos(this.listaContatos);
     }
 
     @Override
@@ -67,11 +72,11 @@ public class Agenda {
 
         definirID();
 
-        gravarContatos();
+        //gravarContatos();
     }
 
     public void editarContato(String telefone) throws ContatoNaoEncontradoException {
-        Scanner sc = new Scanner(System.in);
+
         int indice = retornaIndiceElemento(listaContatos, telefone);
 
         if (indice == -1) {
@@ -96,7 +101,7 @@ public class Agenda {
                 System.out.println("Opção inválida!");
         }
 
-        gravarContatos();
+        //gravarContatos();
     }
 
     private void editarNome(Contato contato) {
