@@ -11,11 +11,11 @@ import java.util.Scanner;
 public class Menu {
 
     private final Scanner entrada;
-    private Agenda agenda; // variavel local agenda dentro classe ada.tech.agenda.Menu
+    private Agenda agenda;
 
     public Menu() {
         this.entrada = new Scanner(System.in);
-        agenda = new Agenda(); // instancia da agenda
+        agenda = new Agenda();
     }
 
     public void iniciar() {
@@ -171,7 +171,7 @@ public class Menu {
     public static String subMenuEditarContato() {
         Scanner sc = new Scanner(System.in);
         int opcao = 0;
-        String seletor = "";
+
         do {
             System.out.println();
             System.out.println("/ ============================== \\");
@@ -200,10 +200,10 @@ public class Menu {
                 case 4:
                     return "";
                 default:
-                    Util.erro("Opcao invalida");
+                    Util.erro("Opção inválida");
             }
         } while (opcao != 4);
 
-        return seletor;
+        return "";
     }
 }
