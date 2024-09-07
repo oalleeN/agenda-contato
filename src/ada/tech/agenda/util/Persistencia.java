@@ -29,13 +29,28 @@ public class Persistencia {
     public static List<Contato> lerArquivoAgenda() {
 
         List<Contato> agendaContatos = new ArrayList<>();
+        File arquivoAgenda = new File(caminho);
+
+        if(!arquivoAgenda.exists()) {
+            try {
+                arquivoAgenda.createNewFile();
+            } catch (IOException e) {
+                System.err.println("O arquivo não foi criado.");
+                return agendaContatos;
+            }
+            return agendaContatos;
+        }
 
         try (Reader ler = new FileReader(caminho)) {
             Type listaDeContatos = new TypeToken<Collection<Contato>>(){}.getType();
 
             agendaContatos = gson.fromJson(ler, listaDeContatos);
+
+            if(agendaContatos == null) {
+                agendaContatos = new ArrayList<>();
+            }
         } catch (IOException e) {
-            System.out.println("Erro ao ler Agenda de Contatos");
+            System.err.println("Erro: " + e.getMessage());
         }
 
         return agendaContatos;
