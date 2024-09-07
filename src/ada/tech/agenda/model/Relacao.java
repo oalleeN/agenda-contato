@@ -15,6 +15,4 @@ public enum Relacao {
     MARIDO,
     ESPOSA,
     OUTRO
-
-
 }

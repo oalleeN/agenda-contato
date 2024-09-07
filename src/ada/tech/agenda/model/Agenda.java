@@ -12,8 +12,7 @@ public class Agenda {
 
     List<Contato> listaContatos;
 
-    public Agenda() { // construtor
-
+    public Agenda() {
 
         this.listaContatos =  Persistencia.lerArquivoAgenda();
 
@@ -34,7 +33,7 @@ public class Agenda {
         List<Contato> contatoBuscado = new ArrayList<>();
 
         for(Contato contato : listaContatos) {
-            if(contato.getNome().equals(nomeContato)) {
+            if(contato.getNome().contains(nomeContato)) {
                 contatoBuscado.add(contato);
             }
         }

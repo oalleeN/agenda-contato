@@ -6,7 +6,7 @@
 
 # 🧑‍💻 | **Agenda de Contatos**
 
-Projeto final do 1ª módulo de Lógica de Programação do programa Santander Coders 2024.1 - Trilha de Back-End com Java. 
+Projeto final do 1º módulo de Lógica de Programação do programa Santander Coders 2024.1 - Trilha de Back-End com Java. 
 
 ## ❓ | **Questionamentos do professor:** 
 **1 - Quais foram os desafios no projeto?**
