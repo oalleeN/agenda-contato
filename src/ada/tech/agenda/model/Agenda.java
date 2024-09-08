@@ -28,12 +28,18 @@ public class Agenda {
         return -1;
     }
 
-    public List<Contato> buscarContatoPorNome(String nomeContato) throws ContatoNaoEncontradoException {
+    public void buscarContatoPorNome(String nomeContato) throws ContatoNaoEncontradoException {
 
         List<Contato> contatoBuscado = new ArrayList<>();
 
         for(Contato contato : listaContatos) {
-            if(contato.getNome().contains(nomeContato)) {
+            if(contato.
+                    getNome().
+                    toLowerCase().
+                    contains(nomeContato.toLowerCase()) || contato.
+                    getSobreNome().
+                    toLowerCase().
+                    contains(nomeContato.toLowerCase())) {
                 contatoBuscado.add(contato);
             }
         }
@@ -42,7 +48,9 @@ public class Agenda {
             throw new ContatoNaoEncontradoException();
         } else {
 
-            return contatoBuscado;
+            for(Contato contato : contatoBuscado) {
+                System.out.println(contato);
+            }
         }
 
     }
@@ -119,9 +127,15 @@ public class Agenda {
         System.out.print("\nInforme o novo número: ");
         String novoNumero = sc.next();
 
-        if (retornaIndiceElemento(listaContatos, novoNumero) != -1 || !novoNumero.matches("\\d+")) {
-            System.out.println("ERRO! Este número não pode ser adicionado.");
-        } else {
+        if (!novoNumero.matches("\\d+")) {
+            System.out.println("ERRO! Número deve conter apenas dígitos.");
+
+        }
+
+        try {
+            buscarContatoPorTelefone(novoNumero);
+            System.out.println("ERRO! Número já está em uso!");
+        } catch (ContatoNaoEncontradoException e) {
             contato.setTelefone(novoNumero);
             System.out.println("\nCONTATO EDITADO!");
         }
