@@ -4,7 +4,10 @@ import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
 import ada.tech.agenda.model.Agenda;
 import ada.tech.agenda.model.Contato;
+import ada.tech.agenda.util.SmsTwilio;
 import ada.tech.agenda.util.Util;
+import com.twilio.exception.ApiException;
+import com.twilio.exception.AuthenticationException;
 
 import java.util.Scanner;
 
@@ -37,7 +40,8 @@ public class Menu {
                     | 2 - Detalhar Contato           |
                     | 3 - Editar Contato             |
                     | 4 - Remover Contato            |
-                    | 5 - Sair                       |
+                    | 5 - Enviar SMS                 |
+                    | 6 - Sair                       |
                     \\ ============================== /
                     """;
 
@@ -54,7 +58,7 @@ public class Menu {
             }
 
             // Mensagem de erro para opções inválidas
-            if (opcao < 1 || opcao > 5) {
+            if (opcao < 1 || opcao > 6) {
                 Util.erro("ERRO! Informe uma opção válida!");
             }
 
@@ -78,6 +82,10 @@ public class Menu {
                     break;
 
                 case 5:
+                    menuEnviarSms();
+                    break;
+
+                case 6:
                     System.out.println("Saindo...");
                     break;
 
@@ -85,7 +93,7 @@ public class Menu {
                     break;
             }
 
-        } while (opcao != 5);
+        } while (opcao != 6);
     }
 
     public void menuAdicionarContato() {
@@ -164,6 +172,26 @@ public class Menu {
         try {
             agenda.detalharContato(telefone);
         } catch (ContatoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void menuEnviarSms(){
+        System.out.println("Qual contato você deseja enviar SMS: ");
+        String telefone = entrada.nextLine();
+        try {
+            Contato contato = agenda.buscarContato(telefone);
+            System.out.println("Digite a mensagem: ");
+            String mensagem = entrada.nextLine();
+            SmsTwilio sms = new SmsTwilio();
+            sms.enviarSms(mensagem,contato);
+        } catch (ContatoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }catch (ApiException e){
+            System.out.println("Erro ao enviar SMS");
+            System.out.println(e.getMessage());
+        }catch (AuthenticationException e){
+            System.out.println("Erro ao autenticar ao Twilio, verifique as variáveis de ambiente");
             System.out.println(e.getMessage());
         }
     }
