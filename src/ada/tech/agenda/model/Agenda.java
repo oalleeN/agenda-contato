@@ -201,4 +201,15 @@ public class Agenda {
         }
         System.out.println();
     }
+    public Contato buscarContato(String telefone) throws ContatoNaoEncontradoException {
+        int indice = retornaIndiceElemento(listaContatos, telefone);
+
+        if (indice == -1) {
+            throw new ContatoNaoEncontradoException();
+        }
+        return listaContatos.get(indice);
+
+
+    }
+
 }
