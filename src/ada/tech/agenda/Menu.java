@@ -180,7 +180,7 @@ public class Menu {
         System.out.println("Qual contato você deseja enviar SMS: ");
         String telefone = entrada.nextLine();
         try {
-            Contato contato = agenda.buscarContato(telefone);
+            Contato contato = agenda.buscarContatoPorTelefone(telefone);
             System.out.println("Digite a mensagem: ");
             String mensagem = entrada.nextLine();
             SmsTwilio sms = new SmsTwilio();

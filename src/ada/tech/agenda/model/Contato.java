@@ -1,5 +1,7 @@
 package ada.tech.agenda.model;
 
+import java.util.Objects;
+
 public class Contato {
 
     private String nome;
@@ -7,6 +9,14 @@ public class Contato {
     private String telefone;
     private String email;
     private int ID;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contato contato = (Contato) o;
+        return Objects.equals(telefone, contato.telefone);
+    }
 
     public Contato(String nome, String sobreNome, String telefone, String email, int ID) {
         this.nome = nome;

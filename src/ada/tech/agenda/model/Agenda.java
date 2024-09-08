@@ -48,16 +48,19 @@ public class Agenda {
     }
 
     public void adicionarContato(Contato novoContato) throws TelefoneExistenteException {
-        int indice = retornaIndiceElemento(listaContatos, novoContato.getTelefone());
 
-        if (indice != -1) {
+        try {
+            buscarContatoPorTelefone(novoContato.getTelefone());
+
             throw new TelefoneExistenteException();
+
+        } catch (ContatoNaoEncontradoException e) {
+
+            listaContatos.add(novoContato);
+            definirID();
+
+            Persistencia.gravarContatos(this.listaContatos);
         }
-
-        listaContatos.add(novoContato);
-        definirID();
-
-        Persistencia.gravarContatos(this.listaContatos);
     }
 
     @Override
@@ -67,28 +70,19 @@ public class Agenda {
 
     public void excluirContato(String telefone) throws ContatoNaoEncontradoException {
 
-        int indice = retornaIndiceElemento(listaContatos, telefone);
+        Contato contato = buscarContatoPorTelefone(telefone);
 
-        if (indice == -1) {
-            throw new ContatoNaoEncontradoException();
-        }
-
-        listaContatos.remove(indice);
+        listaContatos.remove(contato);
 
         definirID();
 
-        //gravarContatos();
+        Persistencia.gravarContatos(this.listaContatos);
+
     }
 
     public void editarContato(String telefone) throws ContatoNaoEncontradoException {
 
-        int indice = retornaIndiceElemento(listaContatos, telefone);
-
-        if (indice == -1) {
-            throw new ContatoNaoEncontradoException();
-        }
-
-        Contato contato = listaContatos.get(indice);
+        Contato contato = buscarContatoPorTelefone(telefone);
 
         String seletor = Menu.subMenuEditarContato();
 
@@ -106,7 +100,7 @@ public class Agenda {
                 System.out.println("Opção inválida!");
         }
 
-        //gravarContatos();
+        Persistencia.gravarContatos(this.listaContatos);
     }
 
     private void editarNome(Contato contato) {
@@ -148,13 +142,9 @@ public class Agenda {
 
     public void detalharContato(String telefone) throws ContatoNaoEncontradoException {
 
-        int indice = retornaIndiceElemento(listaContatos, telefone);
+        Contato contato = buscarContatoPorTelefone(telefone);
 
-        if (indice == -1) {
-            throw new ContatoNaoEncontradoException(); //A MSG ESTA NO MENU
-        }
-
-        System.out.println(listaContatos.get(indice));
+        System.out.println(contato);
     }
 
     private void definirID() {
@@ -201,13 +191,16 @@ public class Agenda {
         }
         System.out.println();
     }
-    public Contato buscarContato(String telefone) throws ContatoNaoEncontradoException {
-        int indice = retornaIndiceElemento(listaContatos, telefone);
 
-        if (indice == -1) {
-            throw new ContatoNaoEncontradoException();
+    public Contato buscarContatoPorTelefone(String telefone) throws ContatoNaoEncontradoException {
+
+        for(Contato contato : listaContatos) {
+            if(contato.getTelefone().equals(telefone)) {
+                return contato;
+            }
         }
-        return listaContatos.get(indice);
+
+        throw new ContatoNaoEncontradoException();
 
 
     }
