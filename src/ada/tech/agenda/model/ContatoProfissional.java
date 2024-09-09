@@ -5,6 +5,8 @@ public class ContatoProfissional extends Contato {
     private String cargo;
     private String empresa;
 
+    private String tipo = "ContatoProfissional";
+
     public ContatoProfissional(String nome, String sobreNome, String telefone, String email, int ID, String cargo, String empresa) {
         super(nome, sobreNome, telefone, email, ID);
         this.cargo = cargo;

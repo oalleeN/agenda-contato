@@ -9,6 +9,8 @@ public class ContatoPessoal extends Contato {
     private Relacao relacao;
     private LocalDate aniversario;
 
+    private String tipo = "ContatoPessoal";
+
     public ContatoPessoal(String nome, String sobreNome, String telefone, String email, int ID, String apelido, Relacao relacao, LocalDate aniversario) {
         super(nome, sobreNome, telefone, email, ID);
         this.apelido = apelido;

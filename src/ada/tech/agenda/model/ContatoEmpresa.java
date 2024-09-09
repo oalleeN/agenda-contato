@@ -1,10 +1,14 @@
 package ada.tech.agenda.model;
 
+import ada.tech.agenda.util.AdaptadorContato;
+
 public class ContatoEmpresa extends Contato {
 
     private String cnpj;
     private String logradouro;
     private String segmento;
+
+    private String tipo = "ContatoEmpresa";
 
     public ContatoEmpresa(String nome, String telefone, String email, int ID, String cnpj, String logradouro, String segmento) {
         super(nome, "", telefone, email, ID);

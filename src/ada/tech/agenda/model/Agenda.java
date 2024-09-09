@@ -155,7 +155,6 @@ public class Agenda {
     }
 
     public void detalharContato(String telefone) throws ContatoNaoEncontradoException {
-
         Contato contato = buscarContatoPorTelefone(telefone);
 
         System.out.println(contato);
@@ -191,7 +190,7 @@ public class Agenda {
 
         System.out.println("=" + "-".repeat(tamanhoId + tamanhoNome + tamanhoTelefone + tamanhoEmail + 11) + "=");
         System.out.printf("| %-" + tamanhoId + "s | %-" + tamanhoNome + "s | %-" + tamanhoTelefone + "s | %-" + tamanhoEmail + "s |%n",
-                "ID", "Nome Completo", "Telefone", "E-mail");
+                "ID", "Nome", "Telefone", "E-mail");
         System.out.println("=" + "-".repeat(tamanhoId + tamanhoNome + tamanhoTelefone + tamanhoEmail + 11) + "=");
 
         for (Contato contato : listaContatos) {

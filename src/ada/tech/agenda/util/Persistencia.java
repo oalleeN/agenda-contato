@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Persistencia {
 
-    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Contato.class, new AdaptadorContato()).create();
     private static String caminho = "agenda.json";
 
     public static void gravarContatos(List<Contato> contatos) {

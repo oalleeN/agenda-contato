@@ -32,19 +32,19 @@ public class Menu {
 
             String opcoes = """
                     
-                    / ============================== \\
-                    |             𝗔𝗚𝗘𝗡𝗗𝗔             |
-                    \\ ============================== /
+                    = ------------------------------- =
+                    |             𝗔𝗚𝗘𝗡𝗗𝗔              |
+                    = ------------------------------- =
                     
-                    / ============ Menu ============ \\
-                    | 1 - Adicionar Contato          |
-                    | 2 - Detalhar Contato           |
-                    | 3 - Editar Contato             |
-                    | 4 - Remover Contato            |
-                    | 5 - Enviar SMS                 |
-                    | 6 - Buscar Contato             |
-                    | 7 - Sair                       |
-                    \\ ============================== /
+                    = ---------=== Menu ===---------- =
+                    | 1 - Adicionar Contato           |
+                    | 2 - Detalhar Contato            |
+                    | 3 - Editar Contato              |
+                    | 4 - Remover Contato             |
+                    | 5 - Enviar SMS                  |
+                    | 6 - Buscar Contato              |
+                    | 7 - Sair                        |
+                    = ------------------------------- =
                     """;
 
             Util.escrever(opcoes);
@@ -108,16 +108,16 @@ public class Menu {
         do {
             String opcoesContato = """
                     
-                    / ============================== \\
-                    |        ADICIONAR CONTATO       |
-                    \\ ============================== /
+                    =-------------------------------- =
+                    |        ADICIONAR CONTATO        |
+                    = ------------------------------- =
                     
-                    / ======= Tipo de Contato ====== \\
-                    | 1 - Contato empresa            |
-                    | 2 - Contato pessoal            |
-                    | 3 - Contato profissional       |
-                    | 4 - Voltar                     |
-                    \\ ============================== /
+                    = ----=== Tipo de Contato ===---- =
+                    | 1 - Contato empresa             |
+                    | 2 - Contato pessoal             |
+                    | 3 - Contato profissional        |
+                    | 4 - Voltar                      |
+                    = ------------------------------- =
                     """;
 
             Util.escrever(opcoesContato);
@@ -156,9 +156,9 @@ public class Menu {
     }
 
     public void menuRemoverContato() {
-        System.out.println("/ ============================== \\");
-        System.out.println("|         EXCLUIR CONTATO         |");
-        System.out.println("\\ ============================== /");
+        System.out.println("= --------------------------------- =");
+        System.out.println("|         EXCLUIR CONTATO           |");
+        System.out.println("= --------------------------------- =");
         System.out.print("\nInforme um número de tefone: ");
         String numeroTelefone = entrada.nextLine();
 
@@ -176,7 +176,7 @@ public class Menu {
         try {
             agenda.editarContato(buscarTelefone);
         } catch (ContatoNaoEncontradoException e) {
-            System.out.println(e.getMessage());
+            System.out.println("");
         }
     }
 
@@ -191,27 +191,32 @@ public class Menu {
     }
 
     public void menuEnviarSms(){
-        System.out.println("Qual contato você deseja enviar SMS: ");
+        System.out.println("= ------------------------------- =");
+        System.out.println("|               SMS               |");
+        System.out.println("= ------------------------------- =");
+
+        System.out.print("Qual contato você deseja enviar SMS: ");
         String telefone = entrada.nextLine();
         try {
             Contato contato = agenda.buscarContatoPorTelefone(telefone);
-            System.out.println("Digite a mensagem: ");
+            System.out.print("\nDigite a mensagem: ");
             String mensagem = entrada.nextLine();
             SmsTwilio sms = new SmsTwilio();
             sms.enviarSms(mensagem,contato);
         } catch (ContatoNaoEncontradoException e) {
-            System.out.println(e.getMessage());
+            Util.erro("Erro! Contato não encontrado.\n");
         }catch (ApiException e){
-            System.out.println("Erro ao enviar SMS");
-            System.out.println(e.getMessage());
+            Util.erro("Erro ao enviar.\n");
         }catch (AuthenticationException e){
-            System.out.println("Erro ao autenticar ao Twilio, verifique as variáveis de ambiente");
-            System.out.println(e.getMessage());
+            Util.erro("Erro ao autenticar ao Twilio, verifique as variáveis de ambiente.\n");
         }
     }
 
     public void menuBuscarContatoPorNome() {
-        System.out.print("Digite o nome do contato: ");
+        System.out.println("= ------------------------------- =");
+        System.out.println("|          BUSCAR CONTATO         |");
+        System.out.println("= ------------------------------- =");
+        System.out.print("\nDigite o nome do contato: ");
         String nome = entrada.nextLine();
 
         try {
@@ -227,16 +232,16 @@ public class Menu {
 
         do {
             System.out.println();
-            System.out.println("/ ============================== \\");
-            System.out.println("|         EDITAR CONTATO         |");
-            System.out.println("\\ ============================= /");
-            System.out.println("\nQual informação deseja editar? \n");
-            System.out.println("/ ============================== \\");
-            System.out.println("| 1 - Nome Completo              |");
-            System.out.println("| 2 - Telefone                   |");
-            System.out.println("| 3 - E-mail                     |");
-            System.out.println("| 4 - Voltar ao menu principal   |");
-            System.out.println("\\ ============================= /");
+            System.out.println("= ------------------------------- =");
+            System.out.println("|          EDITAR CONTATO         |");
+            System.out.println("= ------------------------------- =");
+
+            System.out.println("= ------------------------------- =");
+            System.out.println("| 1 - Nome Completo               |");
+            System.out.println("| 2 - Telefone                    |");
+            System.out.println("| 3 - E-mail                      |");
+            System.out.println("| 4 - Voltar ao menu principal    |");
+            System.out.println("= ------------------------------- =");
 
             System.out.print("\nDigite a opção desejada: ");
             opcao = sc.nextInt();
@@ -277,14 +282,14 @@ public class Menu {
         System.out.print("\nInforme o segmento da empresa: ");
         String segmentoEmpresa = entrada.nextLine();
 
-        ContatoEmpresa contatoEmpresa = new ContatoEmpresa(
+        Contato contatoEmpresa = new ContatoEmpresa(
                 nomeEmpresa, telefoneEmpresa, emailEmpresa, 0, cnpjEmpresa, logradouroEmpresa, segmentoEmpresa);
 
         try {
             agenda.adicionarContato(contatoEmpresa);
             System.out.println("\nCONTATO EMPRESA ADICIONADO COM SUCESSO!");
         } catch (TelefoneExistenteException e) {
-            System.out.println(e.getMessage());
+            System.out.println("ERRO");
         }
     }
 
@@ -335,7 +340,7 @@ public class Menu {
         System.out.print("\nInforme o aniversário (dd/MM/yyyy): ");
         LocalDate aniversario = obterAniversario();
 
-        ContatoPessoal contatoPessoal = new ContatoPessoal(
+        Contato contatoPessoal = new ContatoPessoal(
                 primeiroNome, sobrenome, telefone, email, 0, apelido, relacao, aniversario);
 
         try {
@@ -371,11 +376,11 @@ public class Menu {
     }
 
     public Relacao obterRelacao() {
-        System.out.println("| ========== Relação =========");
+        System.out.println("= -------==== Relação ===------- =");
         for (Relacao r : Relacao.values()) {
             System.out.println("| " + r.ordinal() + " - " + r.name());
         }
-        System.out.println("| ============================");
+        System.out.println("= ------------------------------ =");
 
         Relacao relacao = null;
         while (relacao == null) {
