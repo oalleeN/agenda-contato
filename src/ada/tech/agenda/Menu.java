@@ -2,13 +2,14 @@ package ada.tech.agenda;
 
 import ada.tech.agenda.exception.ContatoNaoEncontradoException;
 import ada.tech.agenda.exception.TelefoneExistenteException;
-import ada.tech.agenda.model.Agenda;
-import ada.tech.agenda.model.Contato;
+import ada.tech.agenda.model.*;
 import ada.tech.agenda.util.SmsTwilio;
 import ada.tech.agenda.util.Util;
 import com.twilio.exception.ApiException;
 import com.twilio.exception.AuthenticationException;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Menu {
@@ -97,48 +98,56 @@ public class Menu {
     }
 
     public void menuAdicionarContato() {
+        int opcaoInt = 0;
 
-        System.out.print("Informe o seu primeiro nome: ");
-        String nome = entrada.nextLine();
+        do {
+            String opcoesContato = """
+                    
+                    / ============================== \\
+                    |        ADICIONAR CONTATO       |
+                    \\ ============================== /
+                    
+                    / ======= Tipo de Contato ====== \\
+                    | 1 - Contato empresa            |
+                    | 2 - Contato pessoal            |
+                    | 3 - Contato profissional       |
+                    | 4 - Voltar                     |
+                    \\ ============================== /
+                    """;
 
-        System.out.print("\nInforme o seu sobrenome: ");
-        String sobrenome = entrada.nextLine();
+            Util.escrever(opcoesContato);
+            System.out.print("Escolha o tipo de contato: ");
+            String opcaoString = entrada.next();
 
-        String telefone;
-        while (true) {
-            System.out.print("\nInforme o seu telefone: ");
-            telefone = entrada.nextLine();
 
-            if (telefone.matches("\\d+")) {
-                break;
-            } else {
-                System.out.println("\nERRO! O telefone deve conter apenas números.");
+            try {
+                opcaoInt = Integer.parseInt(opcaoString);
+                entrada.nextLine();
+            } catch (NumberFormatException e) {
+                Util.erro("ERRO! Informe uma opção válida (1, 2, 3 ou 4).\n");
+                continue;
             }
-        }
 
-        String email;
-        while (true) {
-            System.out.print("\nInforme o seu e-mail: ");
-            email = entrada.nextLine();
-
-            if (email.contains("@")) {
-                break;
-            } else {
-                System.out.println("\nERRO! O e-mail deve conter '@' e ter um formato válido.");
+            if (opcaoInt < 1 || opcaoInt > 4) {
+                Util.erro("ERRO! Informe uma opção válida (1, 2, 3 ou 4).\n");
             }
-        }
 
-        int ID = 0;
-
-        Contato novoContato = new Contato(nome, sobrenome, telefone, email, ID);
-
-        try {
-            agenda.adicionarContato(novoContato);
-            System.out.println("\nCONTATO ADICIONADO!");
-        } catch (TelefoneExistenteException e) {
-            System.out.println();
-            System.out.println(e.getMessage());
-        }
+            switch (opcaoInt) {
+                case 1:
+                    menuAdicionarContatoEmpresa();
+                    break;
+                case 2:
+                    menuAdicionarContatoPessoal();
+                    break;
+                case 3:
+                    menuAdicionarContatoProfissional();
+                    break;
+                case 4:
+                    System.out.println("\nVoltando...");
+                default:
+                    break;
+            }
+        } while (opcaoInt != 4);
     }
 
     public void menuRemoverContato() {
@@ -234,4 +243,152 @@ public class Menu {
 
         return "";
     }
+
+    private void menuAdicionarContatoEmpresa() {
+        System.out.print("\nInforme o nome da empresa: ");
+        String nomeEmpresa = entrada.nextLine();
+
+        String telefoneEmpresa = obterTelefone();
+
+        String emailEmpresa = obterEmail();
+
+        System.out.print("\nInforme o CNPJ da empresa: ");
+        String cnpjEmpresa = entrada.nextLine();
+
+        System.out.print("\nInforme o logradouro da empresa: ");
+        String logradouroEmpresa = entrada.nextLine();
+
+        System.out.print("\nInforme o segmento da empresa: ");
+        String segmentoEmpresa = entrada.nextLine();
+
+        ContatoEmpresa contatoEmpresa = new ContatoEmpresa(
+                nomeEmpresa, telefoneEmpresa, emailEmpresa, 0, cnpjEmpresa, logradouroEmpresa, segmentoEmpresa);
+
+        try {
+            agenda.adicionarContato(contatoEmpresa);
+            System.out.println("\nCONTATO EMPRESA ADICIONADO COM SUCESSO!");
+        } catch (TelefoneExistenteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void menuAdicionarContatoProfissional() {
+        System.out.print("\nInforme o primeiro nome: ");
+        String primeiroNome = entrada.nextLine();
+
+        System.out.print("\nInforme o sobrenome: ");
+        String sobrenome = entrada.nextLine();
+
+        String telefone = obterTelefone();
+
+        String email = obterEmail();
+
+        System.out.print("\nInforme o cargo: ");
+        String cargo = entrada.nextLine();
+
+        System.out.print("\nInforme a empresa: ");
+        String empresa = entrada.nextLine();
+
+        Contato contatoProfissional = new ContatoProfissional(
+                primeiroNome, sobrenome, telefone, email, 0, cargo, empresa);
+
+        try {
+            agenda.adicionarContato(contatoProfissional);
+            System.out.println("\nCONTATO PROFISSIONAL ADICIONADO COM SUCESSO!");
+        } catch (TelefoneExistenteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void menuAdicionarContatoPessoal() {
+        System.out.print("\nInforme o primeiro nome: ");
+        String primeiroNome = entrada.nextLine();
+
+        System.out.print("\nInforme o sobrenome: ");
+        String sobrenome = entrada.nextLine();
+
+        String telefone = obterTelefone();
+
+        String email = obterEmail();
+
+        System.out.print("\nInforme o apelido: ");
+        String apelido = entrada.nextLine();
+
+        Relacao relacao = obterRelacao();
+
+        System.out.print("\nInforme o aniversário (dd/MM/yyyy): ");
+        LocalDate aniversario = obterAniversario();
+
+        ContatoPessoal contatoPessoal = new ContatoPessoal(
+                primeiroNome, sobrenome, telefone, email, 0, apelido, relacao, aniversario);
+
+        try {
+            agenda.adicionarContato(contatoPessoal);
+            System.out.println("\nCONTATO PESSOAL ADICIONADO!");
+        } catch (TelefoneExistenteException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private String obterTelefone() {
+        while (true) {
+            System.out.print("\nInforme o telefone: ");
+            String telefone = entrada.nextLine();
+            if (telefone.matches("\\d+")) {
+                return telefone;
+            } else {
+                System.out.println("\nERRO! O telefone deve conter apenas números.");
+            }
+        }
+    }
+
+    private String obterEmail() {
+        while (true) {
+            System.out.print("\nInforme o e-mail: ");
+            String email = entrada.nextLine();
+            if (email.contains("@")) {
+                return email;
+            } else {
+                System.out.println("\nERRO! O e-mail deve conter '@' e ter um formato válido.");
+            }
+        }
+    }
+
+    public Relacao obterRelacao() {
+        System.out.println("| ========== Relação =========");
+        for (Relacao r : Relacao.values()) {
+            System.out.println("| " + r.ordinal() + " - " + r.name());
+        }
+        System.out.println("| ============================");
+
+        Relacao relacao = null;
+        while (relacao == null) {
+            try {
+                System.out.print("\nEscolha a relação: ");
+                int opcaoRelacao = Integer.parseInt(entrada.nextLine());
+                relacao = Relacao.values()[opcaoRelacao];
+            } catch (Exception e) {
+                Util.erro("\nOpção inválida. Escolha um número correspondente.");
+            }
+        }
+
+        return relacao;
+    }
+
+    public LocalDate obterAniversario() {
+        LocalDate aniversario = null;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        while (aniversario == null) {
+            try {
+                String aniversarioStr = entrada.nextLine();
+                aniversario = LocalDate.parse(aniversarioStr, formatter);
+            } catch (Exception e) {
+                Util.erro("\nFormato de data inválido. Tente novamente.");
+            }
+        }
+
+        return aniversario;
+    }
+
 }
