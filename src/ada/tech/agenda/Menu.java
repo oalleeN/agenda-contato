@@ -42,7 +42,8 @@ public class Menu {
                     | 3 - Editar Contato             |
                     | 4 - Remover Contato            |
                     | 5 - Enviar SMS                 |
-                    | 6 - Sair                       |
+                    | 6 - Buscar Contato             |
+                    | 7 - Sair                       |
                     \\ ============================== /
                     """;
 
@@ -59,7 +60,7 @@ public class Menu {
             }
 
             // Mensagem de erro para opções inválidas
-            if (opcao < 1 || opcao > 6) {
+            if (opcao < 1 || opcao > 7) {
                 Util.erro("ERRO! Informe uma opção válida!");
             }
 
@@ -87,6 +88,10 @@ public class Menu {
                     break;
 
                 case 6:
+                    menuBuscarContatoPorNome();
+                    break;
+
+                case 7:
                     System.out.println("Saindo...");
                     break;
 
@@ -94,7 +99,7 @@ public class Menu {
                     break;
             }
 
-        } while (opcao != 6);
+        } while (opcao != 7);
     }
 
     public void menuAdicionarContato() {
@@ -202,6 +207,17 @@ public class Menu {
         }catch (AuthenticationException e){
             System.out.println("Erro ao autenticar ao Twilio, verifique as variáveis de ambiente");
             System.out.println(e.getMessage());
+        }
+    }
+
+    public void menuBuscarContatoPorNome() {
+        System.out.print("Digite o nome do contato: ");
+        String nome = entrada.nextLine();
+
+        try {
+            agenda.buscarContatoPorNome(nome);
+        } catch (ContatoNaoEncontradoException e) {
+            System.out.println("Nenhum contato encontrado!");
         }
     }
 
